@@ -52,6 +52,8 @@ class FeaturesBlock extends StatelessWidget {
     return SliverList.builder(
         itemCount: 30,
         itemBuilder: (context, index) => const RhymeListCard(
+              rhyme: 'Рифма',
+              sourceWord: 'Слово',
               isFavorite: true,
             ));
   }

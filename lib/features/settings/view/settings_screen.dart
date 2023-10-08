@@ -8,23 +8,43 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return CustomScrollView(
       slivers: [
         const MainAppBar(),
         const SliverToBoxAdapter(child: SizedBox(height: 10)),
         SliverToBoxAdapter(
-          child: SettingsListCard(
+          child: SettingsToggleCard(
             title: 'Темная тема',
+            value: false,
+            onChanged: (v) {},
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: SettingsToggleCard(
+            title: 'Уведомления',
             value: true,
             onChanged: (v) {},
           ),
         ),
         SliverToBoxAdapter(
-          child: SettingsListCard(
-            title: 'Уведомления',
-            value: true,
+          child: SettingsToggleCard(
+            title: 'Разрешить аналитику',
+            value: false,
             onChanged: (v) {},
           ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SettingsActionCard(
+          title: 'Очистить историю',
+          icon: Icons.delete_outline,
+          iconColor: theme.primaryColor,
+          onTap: () {},
+        ),
+        SettingsActionCard(
+          title: 'Поддержка',
+          icon: Icons.message_outlined,
+          onTap: () {},
         ),
       ],
     );

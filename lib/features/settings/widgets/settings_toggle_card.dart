@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rhymer/core/ui/widgets/base/base.dart';
 
-class SettingsListCard extends StatelessWidget {
-  const SettingsListCard(
+class SettingsToggleCard extends StatelessWidget {
+  const SettingsToggleCard(
       {super.key, required this.title, required this.value, this.onChanged});
 
   final String title;

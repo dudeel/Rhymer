@@ -83,6 +83,9 @@ class RhymesBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
-        itemCount: 30, itemBuilder: (context, index) => const RhymeListCard());
+        itemCount: 30,
+        itemBuilder: (context, index) => const RhymeListCard(
+              rhyme: 'Рифма',
+            ));
   }
 }
