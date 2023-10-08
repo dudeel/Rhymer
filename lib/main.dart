@@ -30,34 +30,114 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final theme = Theme.of(context);
-    return Scaffold(
+    return const Scaffold(
       body: CustomScrollView(
         slivers: [
-          const MainAppBar(),
-          const SliverToBoxAdapter(child: SizedBox(height: 10)),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 100,
-              child: ListView.separated(
-                padding: const EdgeInsets.only(left: 16),
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(width: 16),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  final rhymes =
-                      List.generate(4, (index) => 'Рифма ${index + 1}');
-                  return RhymeHistoryCard(rhymes: rhymes);
-                },
-              ),
-            ),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 10)),
-          SliverList.builder(
-              itemCount: 30,
-              itemBuilder: (context, index) => const RhymeListCard()),
+          MainAppBar(),
+          SliverToBoxAdapter(child: SizedBox(height: 10)),
+          HistoryBlock(),
+          SliverToBoxAdapter(child: SizedBox(height: 10)),
+          RhymesBlock(),
         ],
       ),
+      bottomNavigationBar: MainBottomBar(),
+    );
+  }
+}
+
+class MainAppBar extends StatelessWidget {
+  const MainAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverAppBar(
+      pinned: true,
+      snap: true,
+      floating: true,
+      centerTitle: true,
+      title: Text(
+        'Rhymer',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: SearhLine(),
+      ),
+    );
+  }
+}
+
+class HistoryBlock extends StatelessWidget {
+  const HistoryBlock({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 100,
+        child: ListView.separated(
+          padding: const EdgeInsets.only(left: 16),
+          scrollDirection: Axis.horizontal,
+          separatorBuilder: (BuildContext context, int index) =>
+              const SizedBox(width: 16),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            final rhymes = List.generate(4, (index) => 'Рифма ${index + 1}');
+            return RhymeHistoryCard(rhymes: rhymes);
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class RhymesBlock extends StatelessWidget {
+  const RhymesBlock({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList.builder(
+        itemCount: 30, itemBuilder: (context, index) => const RhymeListCard());
+  }
+}
+
+class MainBottomBar extends StatelessWidget {
+  const MainBottomBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return BottomNavigationBar(
+      selectedItemColor: theme.primaryColor,
+      unselectedItemColor: theme.hintColor,
+      currentIndex: 0,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search_rounded),
+          label: 'Поиск',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: 'Избранное',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.menu),
+          label: 'Стихи',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'Настройки',
+        ),
+      ],
     );
   }
 }
@@ -94,27 +174,6 @@ class RhymeHistoryCard extends StatelessWidget {
                 .toList(),
           )
         ],
-      ),
-    );
-  }
-}
-
-class MainAppBar extends StatelessWidget {
-  const MainAppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SliverAppBar(
-      pinned: true,
-      snap: true,
-      floating: true,
-      centerTitle: true,
-      title: Text('Rhymer'),
-      elevation: 0,
-      surfaceTintColor: Colors.transparent,
-      bottom: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: SearhButton(),
       ),
     );
   }
@@ -180,8 +239,8 @@ class RhymeListCard extends StatelessWidget {
   }
 }
 
-class SearhButton extends StatelessWidget {
-  const SearhButton({super.key});
+class SearhLine extends StatelessWidget {
+  const SearhLine({super.key});
 
   @override
   Widget build(BuildContext context) {
