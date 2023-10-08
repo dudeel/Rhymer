@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,21 +29,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
-            pinned: true,
-            snap: true,
-            floating: true,
-            centerTitle: true,
-            title: Text('Rhymer'),
-            elevation: 0,
-            surfaceTintColor: Colors.transparent,
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(60),
-              child: SearhButton(),
+          const MainAppBar(),
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 100,
+              child: ListView.separated(
+                padding: const EdgeInsets.only(left: 16),
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(width: 16),
+                itemCount: 10,
+                itemBuilder: (context, index) => const BaseContainer(
+                  width: 200,
+                  child: SizedBox(height: 10),
+                ),
+              ),
             ),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -55,21 +61,65 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class MainAppBar extends StatelessWidget {
+  const MainAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverAppBar(
+      pinned: true,
+      snap: true,
+      floating: true,
+      centerTitle: true,
+      title: Text('Rhymer'),
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: SearhButton(),
+      ),
+    );
+  }
+}
+
+class BaseContainer extends StatelessWidget {
+  const BaseContainer({
+    Key? key,
+    required this.width,
+    required this.child,
+    this.margin,
+  }) : super(key: key);
+
+  final double width;
+  final EdgeInsets? margin;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      width: width,
+      height: 40,
+      margin: margin,
+      padding: const EdgeInsets.only(left: 12),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: child,
+    );
+  }
+}
+
 class RhymeListCard extends StatelessWidget {
   const RhymeListCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
+    return BaseContainer(
       width: double.infinity,
-      height: 40,
       margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 10),
-      padding: const EdgeInsets.only(left: 12),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
