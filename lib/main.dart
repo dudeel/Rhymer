@@ -24,9 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({
-    super.key,
-  });
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +47,43 @@ class HomeScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 10)),
           SliverList.builder(
-              itemBuilder: (context, index) => Container(
-                    width: double.infinity,
-                    height: 40,
-                    margin: const EdgeInsets.symmetric(horizontal: 16)
-                        .copyWith(bottom: 10),
-                    decoration: BoxDecoration(
-                      color: theme.cardColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  )),
+              itemCount: 30,
+              itemBuilder: (context, index) => const RhymeListCard()),
+        ],
+      ),
+    );
+  }
+}
+
+class RhymeListCard extends StatelessWidget {
+  const RhymeListCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      width: double.infinity,
+      height: 40,
+      margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 10),
+      padding: const EdgeInsets.only(left: 12),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Рифма',
+            style: theme.textTheme.bodyLarge,
+          ),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.favorite,
+                size: 20,
+                color: theme.hintColor.withOpacity(0.2),
+              ))
         ],
       ),
     );
@@ -71,7 +96,6 @@ class SearhButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 8),
