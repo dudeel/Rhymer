@@ -24,14 +24,25 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  var _selectedPageIndex = 0;
+
+  void _openPage(int index) {
+    setState(() => _selectedPageIndex = index);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-    return const Scaffold(
-      body: CustomScrollView(
+    final theme = Theme.of(context);
+    return Scaffold(
+      body: const CustomScrollView(
         slivers: [
           MainAppBar(),
           SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -40,7 +51,30 @@ class HomeScreen extends StatelessWidget {
           RhymesBlock(),
         ],
       ),
-      bottomNavigationBar: MainBottomBar(),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: theme.primaryColor,
+        unselectedItemColor: theme.hintColor,
+        currentIndex: _selectedPageIndex,
+        onTap: _openPage,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search_rounded),
+            label: 'Поиск',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Избранное',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: 'Стихи',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Настройки',
+          ),
+        ],
+      ),
     );
   }
 }
@@ -107,38 +141,6 @@ class RhymesBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList.builder(
         itemCount: 30, itemBuilder: (context, index) => const RhymeListCard());
-  }
-}
-
-class MainBottomBar extends StatelessWidget {
-  const MainBottomBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return BottomNavigationBar(
-      selectedItemColor: theme.primaryColor,
-      unselectedItemColor: theme.hintColor,
-      currentIndex: 0,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search_rounded),
-          label: 'Поиск',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: 'Избранное',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.menu),
-          label: 'Стихи',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Настройки',
-        ),
-      ],
-    );
   }
 }
 
