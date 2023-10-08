@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rhymer/router/router.dart';
+import 'package:rhymer/core/router/router.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       routes: const [
         SearchRoute(),
         FavoritesRoute(),
-        PoemsRoute(),
+        HistoryRoute(),
         SettingRoute(),
       ],
       builder: (context, child) {
@@ -40,8 +40,8 @@ class HomeScreen extends StatelessWidget {
                 label: 'Избранное',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.menu),
-                label: 'Стихи',
+                icon: Icon(Icons.history),
+                label: 'История',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),

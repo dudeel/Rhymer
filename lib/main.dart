@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rhymer/router/router.dart';
+import 'package:rhymer/core/router/router.dart';
 
 void main() {
   runApp(const RhymerApp());
