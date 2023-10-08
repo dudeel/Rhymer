@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class BaseContainer extends StatelessWidget {
   const BaseContainer({
     Key? key,
-    required this.width,
     required this.child,
+    this.width,
     this.margin,
     this.padding = const EdgeInsets.only(left: 12),
   }) : super(key: key);
 
-  final double width;
+  final double? width;
   final Widget child;
   final EdgeInsets? margin;
   final EdgeInsets padding;
@@ -19,7 +19,7 @@ class BaseContainer extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       width: width,
-      height: 40,
+      height: 45,
       margin: margin,
       padding: padding,
       decoration: BoxDecoration(
