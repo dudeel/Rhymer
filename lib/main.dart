@@ -44,10 +44,11 @@ class HomeScreen extends StatelessWidget {
                 separatorBuilder: (BuildContext context, int index) =>
                     const SizedBox(width: 16),
                 itemCount: 10,
-                itemBuilder: (context, index) => const BaseContainer(
-                  width: 200,
-                  child: SizedBox(height: 10),
-                ),
+                itemBuilder: (context, index) {
+                  final rhymes =
+                      List.generate(4, (index) => 'Рифма ${index + 1}');
+                  return RhymeHistoryCard(rhymes: rhymes);
+                },
               ),
             ),
           ),
@@ -55,6 +56,43 @@ class HomeScreen extends StatelessWidget {
           SliverList.builder(
               itemCount: 30,
               itemBuilder: (context, index) => const RhymeListCard()),
+        ],
+      ),
+    );
+  }
+}
+
+class RhymeHistoryCard extends StatelessWidget {
+  const RhymeHistoryCard({
+    super.key,
+    required this.rhymes,
+  });
+
+  final List<String> rhymes;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return BaseContainer(
+      width: 200,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Слово',
+            style: theme.textTheme.bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          Wrap(
+            children: rhymes
+                .map((e) => Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Text(e),
+                    ))
+                .toList(),
+          )
         ],
       ),
     );
@@ -88,11 +126,13 @@ class BaseContainer extends StatelessWidget {
     required this.width,
     required this.child,
     this.margin,
+    this.padding = const EdgeInsets.only(left: 12),
   }) : super(key: key);
 
   final double width;
-  final EdgeInsets? margin;
   final Widget child;
+  final EdgeInsets? margin;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +141,7 @@ class BaseContainer extends StatelessWidget {
       width: width,
       height: 40,
       margin: margin,
-      padding: const EdgeInsets.only(left: 12),
+      padding: padding,
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(10),
@@ -162,7 +202,7 @@ class SearhButton extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           Text(
-            'Поиск рифм',
+            'Поиск рифм...',
             style: TextStyle(
               fontSize: 18,
               color: theme.hintColor.withOpacity(0.4),
