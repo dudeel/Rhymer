@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearhLine extends StatelessWidget {
-  const SearhLine({
+class SearhButtonLine extends StatelessWidget {
+  const SearhButtonLine({
     Key? key,
     required this.onTap,
   }) : super(key: key);

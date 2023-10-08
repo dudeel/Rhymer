@@ -27,7 +27,6 @@ class MainAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return SliverAppBar(
       pinned: true,
       snap: true,
@@ -44,32 +43,9 @@ class MainAppBar extends StatelessWidget {
       surfaceTintColor: Colors.transparent,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: SearhLine(
+        child: SearhButtonLine(
           onTap: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              context: context,
-              builder: (context) => Padding(
-                padding: const EdgeInsets.only(top: 80),
-                child: BaseBottomSheet(
-                  child: Row(
-                    children: [
-                      const Expanded(child: TextField()),
-                      Container(
-                        height: 44,
-                        width: 44,
-                        decoration: BoxDecoration(
-                          color: theme.primaryColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
+            _showSearchBottomSheet(context);
           },
         ),
       ),
@@ -77,32 +53,19 @@ class MainAppBar extends StatelessWidget {
   }
 }
 
-class BaseBottomSheet extends StatelessWidget {
-  const BaseBottomSheet({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: theme.canvasColor,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
+void _showSearchBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    context: context,
+    builder: (context) => const Padding(
+      padding: EdgeInsets.only(top: 80),
+      child: BaseBottomSheet(
+        child: SearchRhymesBottomSheet(),
       ),
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: child,
-          ),
-        ],
-      ),
-    );
-  }
+    ),
+  );
 }
 
 class HistoryBlock extends StatelessWidget {
