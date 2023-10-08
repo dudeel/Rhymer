@@ -31,25 +31,34 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             pinned: true,
             snap: true,
             floating: true,
             centerTitle: true,
-            title: const Text(
-              'Rhymer',
-            ),
+            title: Text('Rhymer'),
             elevation: 0,
             surfaceTintColor: Colors.transparent,
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(70),
+              preferredSize: Size.fromHeight(60),
               child: SearhButton(),
             ),
           ),
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          SliverList.builder(
+              itemBuilder: (context, index) => Container(
+                    width: double.infinity,
+                    height: 40,
+                    margin: const EdgeInsets.symmetric(horizontal: 16)
+                        .copyWith(bottom: 10),
+                    decoration: BoxDecoration(
+                      color: theme.cardColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  )),
         ],
       ),
     );
