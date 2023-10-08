@@ -11,9 +11,7 @@ class HistoryScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         const MainAppBar(),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 10),
-        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 10)),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           sliver: SliverGrid(
@@ -38,6 +36,7 @@ class HistoryScreen extends StatelessWidget {
             ),
           ),
         ),
+        const SliverToBoxAdapter(child: SizedBox(height: 10)),
       ],
     );
   }
