@@ -27,12 +27,13 @@ class MainAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverAppBar(
+    final theme = Theme.of(context);
+    return SliverAppBar(
       pinned: true,
       snap: true,
       floating: true,
       centerTitle: true,
-      title: Text(
+      title: const Text(
         'Rhymer',
         style: TextStyle(
           fontSize: 24,
@@ -42,8 +43,63 @@ class MainAppBar extends StatelessWidget {
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: SearhLine(),
+        preferredSize: const Size.fromHeight(60),
+        child: SearhLine(
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              context: context,
+              builder: (context) => Padding(
+                padding: const EdgeInsets.only(top: 80),
+                child: BaseBottomSheet(
+                  child: Row(
+                    children: [
+                      const Expanded(child: TextField()),
+                      Container(
+                        height: 44,
+                        width: 44,
+                        decoration: BoxDecoration(
+                          color: theme.primaryColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class BaseBottomSheet extends StatelessWidget {
+  const BaseBottomSheet({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: theme.canvasColor,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: child,
+          ),
+        ],
       ),
     );
   }
