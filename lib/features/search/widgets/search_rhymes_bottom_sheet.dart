@@ -6,49 +6,67 @@ class SearchRhymesBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: Container(
-            height: 48,
-            decoration: BoxDecoration(
-              color: theme.hintColor.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Введите слово...',
-                hintStyle: TextStyle(
-                  fontSize: 18,
-                  color: theme.hintColor.withOpacity(0.4),
-                  fontWeight: FontWeight.w500,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide.none,
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: theme.hintColor.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Введите слово...',
+                      hintStyle: TextStyle(
+                        fontSize: 18,
+                        color: theme.hintColor.withOpacity(0.4),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(width: 8),
+              Container(
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                  color: theme.primaryColor,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.search,
+                  size: 28,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(width: 8),
-        Container(
-          height: 48,
-          width: 48,
-          decoration: BoxDecoration(
-            color: theme.primaryColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: const Icon(
-            Icons.search,
-            size: 28,
-            color: Colors.white,
+        const Divider(height: 1),
+        Expanded(
+          child: ListView.separated(
+            itemBuilder: (context, index) => ListTile(
+              title: const Text('Автокомплит'),
+              onTap: () {},
+            ),
+            separatorBuilder: (context, _) => const Divider(height: 1),
+            itemCount: 15,
           ),
         ),
       ],
