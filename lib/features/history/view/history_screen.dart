@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rhymer/core/ui/widgets/rhyme_history_card.dart';
+import 'package:rhymer/core/ui/widgets/widgets.dart';
 
 @RoutePage()
 class HistoryScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class HistoryScreen extends StatelessWidget {
               maxCrossAxisExtent: 200.0,
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
-              childAspectRatio: 1.5,
+              childAspectRatio: 1.8,
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
