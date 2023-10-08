@@ -33,22 +33,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var _selectedPageIndex = 0;
+  final _pageController = PageController();
 
   void _openPage(int index) {
     setState(() => _selectedPageIndex = index);
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linear,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: const CustomScrollView(
-        slivers: [
-          MainAppBar(),
-          SliverToBoxAdapter(child: SizedBox(height: 10)),
-          HistoryBlock(),
-          SliverToBoxAdapter(child: SizedBox(height: 10)),
-          RhymesBlock(),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (value) => setState(() => _selectedPageIndex = value),
+        children: const [
+          SearchScreen(),
+          Scaffold(),
+          Scaffold(),
+          Scaffold(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -79,6 +86,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+//  Screens
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const CustomScrollView(
+      slivers: [
+        MainAppBar(),
+        SliverToBoxAdapter(child: SizedBox(height: 10)),
+        HistoryBlock(),
+        SliverToBoxAdapter(child: SizedBox(height: 10)),
+        RhymesBlock(),
+      ],
+    );
+  }
+}
+
+//  Blocks
 class MainAppBar extends StatelessWidget {
   const MainAppBar({super.key});
 
@@ -144,37 +172,36 @@ class RhymesBlock extends StatelessWidget {
   }
 }
 
-class RhymeHistoryCard extends StatelessWidget {
-  const RhymeHistoryCard({
-    super.key,
-    required this.rhymes,
-  });
-
-  final List<String> rhymes;
+//  Widgets
+class SearhLine extends StatelessWidget {
+  const SearhLine({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BaseContainer(
-      width: 200,
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: theme.hintColor.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
         children: [
-          Text(
-            'Слово',
-            style: theme.textTheme.bodyLarge
-                ?.copyWith(fontWeight: FontWeight.w700),
+          Icon(
+            Icons.search_rounded,
+            color: theme.hintColor.withOpacity(0.4),
           ),
-          Wrap(
-            children: rhymes
-                .map((e) => Padding(
-                      padding: const EdgeInsets.only(right: 4),
-                      child: Text(e),
-                    ))
-                .toList(),
-          )
+          const SizedBox(width: 12),
+          Text(
+            'Поиск рифм...',
+            style: TextStyle(
+              fontSize: 18,
+              color: theme.hintColor.withOpacity(0.4),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );
@@ -212,6 +239,43 @@ class BaseContainer extends StatelessWidget {
   }
 }
 
+class RhymeHistoryCard extends StatelessWidget {
+  const RhymeHistoryCard({
+    super.key,
+    required this.rhymes,
+  });
+
+  final List<String> rhymes;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return BaseContainer(
+      width: 200,
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Слово',
+            style: theme.textTheme.bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          Wrap(
+            children: rhymes
+                .map((e) => Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Text(e),
+                    ))
+                .toList(),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class RhymeListCard extends StatelessWidget {
   const RhymeListCard({super.key});
 
@@ -235,41 +299,6 @@ class RhymeListCard extends StatelessWidget {
                 size: 20,
                 color: theme.hintColor.withOpacity(0.2),
               ))
-        ],
-      ),
-    );
-  }
-}
-
-class SearhLine extends StatelessWidget {
-  const SearhLine({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: theme.hintColor.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.search_rounded,
-            color: theme.hintColor.withOpacity(0.4),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            'Поиск рифм...',
-            style: TextStyle(
-              fontSize: 18,
-              color: theme.hintColor.withOpacity(0.4),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
         ],
       ),
     );
